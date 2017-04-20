@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" class="full-height">
+
+<head>
+  <meta charset="UTF-8">
+  <title>镑客大使</title>
+  <meta name="description" content="nono">
+  <meta name="viewport" content="initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+  <meta name="format-detection" content="telephone=no">
+  <!-- safari full screen -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta id="apple-mobile-web-app-title" name="apple-mobile-web-app-title" content="nono">
+  <!--build:css css/main.min.css-->
+  <link rel="stylesheet" type="text/css" href="css/index.css">
+  <!--endbuild-->
+  <script type="text/javascript" src="https://m.nonobank.com/nonoutil/js/tongdun.js"></script>
+  <script type="text/javascript" src="https://m.nonobank.com/tingYun/tingyun-rum-nono-activity.js" async></script>
+  <script>
+  //镑客大使落地页:
+  var _czc = _czc || [];
+  _czc.push(["_setAccount", "1258442764"]);
+  </script>
+</head>
+
+<body>
+  <div id="app">
+    <loading :show='isLoading'></loading>
+    <section class="reg">
+      <div class="banner">
+        <div class="banner-title">
+          <p class="margin-bottom10 f18">我已在诺诺镑客投资<span :class="{'color-red f24':limTime}" v-cloak>{{+limTime?limTime:"很久"}}</span><span :class="{'color-red f16':limTime}" v-cloak>{{+limTime?"天":""}}</span></p>
+          <p class="f18">邀请您一起投资</p>
+        </div>
+        <img src="images/banner_01.png" alt="">
+      </div>
+      <div class="welfare">
+        <img src="images/welfare01.png" alt="" v-if="!isWelfare">
+        <img src="images/welfare02.png" alt="" v-if="isWelfare">
+      </div>
+      <form name="regForm">
+        <p class="f14 text-center color-white errormsg" v-cloak>{{errorMsg}}</p>
+        <div class="item margin-bottom15">
+          <input type="tel" id="inpPhone" placeholder="请输入手机号" maxlength="11" v-model='user.phone' @blur="checkPhone()" @input="clearError()" v-focus="focusStatus == 3">
+        </div>
+        <div class="relative code-input margin-bottom15" :class="{'fadeout-left':timeCount >= 0}">
+          <div class="item row row-center row-no-padding margin-bottom15 code-img">
+            <div class="col">
+              <input type="text" placeholder="请输入图形安全码" maxlength="4" v-model='user.codeImg' @input="clearError()" v-focus="focusStatus == 1">
+            </div>
+            <div class="col col-30 img-code">
+              <img v-cloak class="code-change" @click="refreshCaptcha()" :src="imgSrc"></span>
+            </div>
+          </div>
+          <div class="item row row-center row-no-padding code-msg margin-bottom15" v-cloak>
+            <div class="col">
+              <input type="tel" placeholder="请输入短信验证码" maxlength="6" v-model='user.codeMsg' v-focus="focusStatus == 2">
+            </div>
+            <div class="col col-40 tel-code color-red">
+              <span class="code-change" v-if='timeCount > 0' v-cloak>重新发送({{timeCount}}s)</span>
+              <span class="code-change" v-if='timeCount <= 0' @click='getCode()'>重新发送</span>
+            </div>
+          </div>
+        </div>
+        <div class="agreement margin-bottom15">
+          <input type="checkbox" v-model="user.agreement" id='agreement'>
+          <label for="agreement" class="color-white"><span class='checked'></span>我已阅读和同意<a href="https://m.nonobank.com/agreements/nono/link/service.html" class="color-white">《服务协议》</a>和<a href="https://m.nonobank.com/agreements/nono/link/privacy.html" class="color-white">《隐私条款》</a></label>
+        </div>
+        <!-- <div class="item f16 btn margin-bottom15" @click='submit()'>领取</div> -->
+        <button class="item f16 btn margin-bottom15"  type="button" @click='submit()'>领取</button>
+      </form>
+      <div class="item-wrap bg-white">
+        <div class="title f16 color-red margin-bottom15">选择诺诺的理由</div>
+        <div class="item row row-center row-no-padding">
+          <div class="icon"><img src="images/item_01.png" alt=""></div>
+          <div class="col">
+            <h1 class="color-dark f14 margin-bottom10">实力见证</h1>
+            <p class="color-gray">控股公司麦子金服的投资股东为证券系机构、银行系机构等。</p>
+          </div>
+        </div>
+        <div class="item row row-center row-no-padding">
+          <div class="icon"><img src="images/item_02.png" alt=""></div>
+          <div class="col">
+            <h1 class="color-dark f14 margin-bottom10">数据说话</h1>
+            <p class="color-gray">近8年稳健运营，服务用户超410万，累计超400亿交易额，历史年化收益率约9.23%。</p>
+          </div>
+        </div>
+        <div class="item row row-center row-no-padding">
+          <div class="icon"><img src="images/item_03.png" alt=""></div>
+          <div class="col">
+            <h1 class="color-dark f14 margin-bottom10">明星团队</h1>
+            <p class="color-gray">核心高管团队来自招商银行、腾讯、阿里巴巴、百度、平安集团、复星集团等。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- build:js js/vendor.js -->
+    <!-- bower:js -->
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+    <script src="/bower_components/js-md5/src/md5.js"></script>
+    <script src="/bower_components/es6-promise/es6-promise.auto.min.js"></script>
+    <script src="/bower_components/axios/dist/axios.js"></script>
+    <script src="/bower_components/es6-shim/es6-shim.js"></script>
+    <script src="/bower_components/es5-shim/es5-shim.js"></script>
+    <!-- endbower -->
+    <!--endbuild-->
+    <!--build:js js/index.min.js -->
+    <script src="js/qs.js"></script>
+    <script src="js/encryptSign.js"></script>
+    <script src="js/event.js"></script>
+    <script src="js/http.js"></script>
+    <script src="js/index.js"></script>
+    <!--endbuild-->
+    <script>
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan style='display:none' id='cnzz_stat_icon_1258442764'%3E%3C/span%3E%3Cscript async src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1258442764' %3E%3C/script%3E"));
+    </script>
+  </div>
+</body>
+
+</html>

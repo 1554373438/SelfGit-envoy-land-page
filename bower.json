@@ -1,0 +1,22 @@
+{
+  "name": "webapp",
+  "private": true,
+  "dependencies": {
+    "vue": "^2.1.10",
+    "js-md5": "md5#^0.4.1",
+    "es6-promise": "^4.0.5",
+    "axios": "^0.15.3",
+    "es6-shim": "^0.35.3",
+    "es5-shim": "^4.5.9"
+  },
+  "overrides": {
+    "vue": {
+      "main": [
+        "dist/vue.min.js"
+      ]
+    },
+    "es6-promise": {
+      "main": ["es6-promise.auto.min.js"]
+    }
+  }
+}

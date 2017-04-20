@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" class="full-height">
+
+<head>
+  <meta charset="UTF-8">
+  <title>镑客大使</title>
+  <meta name="description" content="nono">
+  <meta name="viewport" content="initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+  <meta name="format-detection" content="telephone=no">
+  <!-- safari full screen -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta id="apple-mobile-web-app-title" name="apple-mobile-web-app-title" content="nono">
+  <!--build:css css/main.min.css-->
+  <link rel="stylesheet" type="text/css" href="css/index.css">
+  <!--endbuild-->
+
+  <!--build:css css/odometer.min.css-->
+  <link rel="stylesheet" href="css/odometer.css" />
+  <!--endbuild-->
+
+  <script type="text/javascript" src="https://m.nonobank.com/nonoutil/js/tongdun.js"></script>
+  <script type="text/javascript" src="https://m.nonobank.com/tingYun/tingyun-rum-nono-activity.js" async></script>
+  <script>
+  //镑客大使落地页:
+  var _czc = _czc || [];
+  _czc.push(["_setAccount", "1258442764"]);
+  </script>
+</head>
+
+<body>
+  <div id="app">
+    <section class="reg-success" >
+      <div class="banner" id="banner">
+        <img src="images/banner_02.png" alt="">
+      </div>
+      <div class="item-wrap">
+        <div class="item row row-center row-no-padding">
+          <div class="col col-40">
+            <div class="row row-center row-no-padding">
+              <div class="tip f14 color-red row row-center row-no-padding">现金券</div>
+              <div class="col color-red text-center">&nbsp;¥&nbsp;<span class="f24">668</span></div>
+              <div><img src="images/dot.png" alt=""></div>
+            </div>
+          </div>
+          <div class="col">
+            <p class="color-gray">可在投资时抵现金</p>
+          </div>
+        </div>
+        <div class="item row row-center row-no-padding" v-if="hasBalance">
+          <div class="col col-40">
+            <div class="row row-center row-no-padding">
+              <div class="tip f14 color-red row row-center row-no-padding">特权本金</div>
+               <div class="col color-red text-center" v-cloak>&nbsp;¥&nbsp;
+                <span id="odometer" class="odometer f24" >000</span>
+               </div>
+              <div><img src="images/dot.png" alt=""></div>
+            </div>
+          </div>
+          <div class="col">
+            <p class="color-gray">年化8.8% 计息7天</p>
+            <p class="color-gray">投资计划类产品、月月升可激活</p>
+            <p class="color-gray">计息结束后利息返回至余额账户</p>
+          </div>
+        </div>
+        <div class="f16 btn margin-bottom15" @click="download">下载APP 立即投资</div>
+      </div>
+      <div class="list-wrap bg-white padding-horizontal margin-horizontal" v-if="invitees.length != 0">
+        <div class="list color-red f16 text-center">查看大家的手气</div>
+        <div class="list row row-center row-no-padding" v-for="(item, index) in invitees">
+          <div class="item-width">
+            <p class="margin-bottom10 f14" v-cloak>{{item.mobile}}</p>
+            <p class="color-gray" v-cloak>{{item.registerTime}}</p>
+          </div>
+          <p class="col text-right"><span class="color-red" v-cloak>¥668</span> 现金券 <span class="color-red">¥{{item.amount}}</span> 特权本金</p>
+        </div>
+      </div>
+      <div class="rule">
+        <div class="title f16 color-red">活动规则</div>
+        <p>1.新客注册可获得668元现金券礼包，可至诺诺镑客APP“我的福利”查看</p>
+        <p>2.特权本金按照历史年化8.8%收益，计息7天，新客投资后（不含诺诺盈、债转产品）可激活返至余额，若在领取后的30日未激活则失效；</p>
+        <p>3.单笔投资金额≥5000元（3月期及以上期限、计划类产品）也可获得分发特权本金权利（10天有效），成功邀请新好友投资，同样可获得好友投资年化1%返现和0.3%加息券（10000元起投贴心3-24月期，20天有效），好友数量越多，加息券越多；</p>
+        <p>4.凡发现在活动期间有恶意刷取奖励的行为，平台有权不发放奖励或收回已发奖励。</p>
+      </div>
+      <div class="footer bg-white">
+        <div class="f16 btn" @click="gotoTop()">下载APP 立即投资</div>
+      </div>
+    </section>
+    <!-- build:js js/vendor.js -->
+    <!-- bower:js -->
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+    <script src="/bower_components/js-md5/src/md5.js"></script>
+    <script src="/bower_components/es6-promise/es6-promise.auto.min.js"></script>
+    <script src="/bower_components/axios/dist/axios.js"></script>
+    <script src="/bower_components/es6-shim/es6-shim.js"></script>
+    <script src="/bower_components/es5-shim/es5-shim.js"></script>
+    <!-- endbower -->
+    <!--endbuild-->
+    <!--build:js js/odometer.min.js -->
+    <script src="js/odometer.js"></script>
+    <!--endbuild-->
+    <!--build:js js/regsuccess.min.js -->
+    <script src="js/qs.js"></script>
+    <script src="js/encryptSign.js"></script>
+    <script src="js/event.js"></script>
+    <script src="js/http.js"></script>
+    <script src="js/regsuccess.js"></script>
+    <!--endbuild-->
+
+
+    
+    <script>
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan style='display:none' id='cnzz_stat_icon_1258442764'%3E%3C/span%3E%3Cscript async src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1258442764' %3E%3C/script%3E"));
+    </script>
+  </div>
+</body>
+
+</html>
