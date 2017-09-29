@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>镑客大使</title>
+  <title>邀请好友</title>
   <meta name="description" content="nono">
   <meta name="viewport" content="initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
   <meta name="format-detection" content="telephone=no">
@@ -28,25 +28,28 @@
     <loading :show='isLoading'></loading>
     <section class="reg">
       <div class="banner">
-        <div class="banner-title">
-          <p class="margin-bottom10 f18">我已在诺诺镑客投资<span :class="{'color-red f24':limTime}" v-cloak>{{+limTime?limTime:"很久"}}</span><span :class="{'color-red f16':limTime}" v-cloak>{{+limTime?"天":""}}</span></p>
-          <p class="f18">邀请您一起投资</p>
+        <div class="row row-center">
+          <div class="banner-per"><img src="images/banner_per.png" alt=""></div>
+          <div class="row row-center col banner-title text-center">
+            <p class="f16">我已在麦子金服财富投资<span :class="{'color-red f24 bold':limTime}" v-cloak>{{+limTime?limTime:"很久"}}</span><span :class="{'color-red f16':limTime}" v-cloak>{{+limTime?"天":""}}</span>
+              <br>邀请您一起投资</p>
+            <div class="banner-arrow"><img src="images/banner_arrow.png" alt=""></div>
+          </div>
         </div>
-        <img src="images/banner_01.png" alt="">
       </div>
       <div class="welfare">
-        <img src="images/welfare01.png" alt="" v-if="!isWelfare">
-        <img src="images/welfare02.png" alt="" v-if="isWelfare">
+        <img src="images/welfare_01.png" alt="" v-if="!isWelfare">
+        <img src="images/welfare_02.png" alt="" v-if="isWelfare">
       </div>
       <form name="regForm">
-        <p class="f14 text-center color-white errormsg" v-cloak>{{errorMsg}}</p>
+        <p class="f14 text-center color-red errormsg" v-cloak>{{errorMsg}}</p>
         <div class="item margin-bottom15">
           <input type="tel" id="inpPhone" placeholder="请输入手机号" maxlength="11" v-model='user.phone' @blur="checkPhone()" @input="clearError()" v-focus="focusStatus == 3">
         </div>
         <div class="relative code-input margin-bottom15" :class="{'fadeout-left':timeCount >= 0}">
           <div class="item row row-center row-no-padding margin-bottom15 code-img">
             <div class="col">
-              <input type="text" placeholder="请输入图形安全码" maxlength="4" v-model='user.codeImg' @input="clearError()" v-focus="focusStatus == 1">
+              <input type="text" placeholder="请输入图形验证码" maxlength="4" v-model='user.codeImg' @input="clearError()" v-focus="focusStatus == 1">
             </div>
             <div class="col col-30 img-code">
               <img v-cloak class="code-change" @click="refreshCaptcha()" :src="imgSrc"></span>
@@ -64,32 +67,39 @@
         </div>
         <div class="agreement margin-bottom15">
           <input type="checkbox" v-model="user.agreement" id='agreement'>
-          <label for="agreement" class="color-white"><span class='checked'></span>我已阅读和同意<a href="https://m.nonobank.com/agreements/nono/link/service.html" class="color-white">《服务协议》</a>和<a href="https://m.nonobank.com/agreements/nono/link/privacy.html" class="color-white">《隐私条款》</a></label>
+          <label for="agreement" class=""><span class='checked'></span>
+            <span @click='goRegPrivacy()'>我已阅读并同意《注册协议与隐私条款》</span>
+          </label>
         </div>
-        <!-- <div class="item f16 btn margin-bottom15" @click='submit()'>领取</div> -->
-        <button class="item f16 btn margin-bottom15"  type="button" @click='submit()'>领取</button>
+        <button class="item f16 btn margin-bottom15" type="button" @click='submit()'>领取</button>
       </form>
       <div class="item-wrap bg-white">
-        <div class="title f16 color-red margin-bottom15">选择诺诺的理由</div>
         <div class="item row row-center row-no-padding">
           <div class="icon"><img src="images/item_01.png" alt=""></div>
           <div class="col">
-            <h1 class="color-dark f14 margin-bottom10">实力见证</h1>
-            <p class="color-gray">控股公司麦子金服的投资股东为证券系机构、银行系机构等。</p>
+            <h1 class="color-dark f14 margin-bottom10 bold">运营8年 行业元老</h1>
+            <p class="color-gray">成立于2009年，是国内较早成立的互联网金融信息服务平台之一，经得住时间检验的平台才靠得住。</p>
           </div>
         </div>
         <div class="item row row-center row-no-padding">
           <div class="icon"><img src="images/item_02.png" alt=""></div>
           <div class="col">
-            <h1 class="color-dark f14 margin-bottom10">数据说话</h1>
-            <p class="color-gray">近8年稳健运营，服务用户超410万，累计超400亿交易额，历史年化收益率约9.23%。</p>
+            <h1 class="color-dark f14 margin-bottom10 bold">银行存管 安心投资</h1>
+            <p class="color-gray">麦子金服财富与徽商银行资金存管已正式上线，用户资金与平台隔离，让投资更安心。</p>
           </div>
         </div>
         <div class="item row row-center row-no-padding">
           <div class="icon"><img src="images/item_03.png" alt=""></div>
           <div class="col">
-            <h1 class="color-dark f14 margin-bottom10">明星团队</h1>
-            <p class="color-gray">核心高管团队来自招商银行、腾讯、阿里巴巴、百度、平安集团、复星集团等。</p>
+            <h1 class="color-dark f14 margin-bottom10 bold">背景雄厚 实力强大</h1>
+            <p class="color-gray">控股股东2015年获得海通创新战略投资；麦子金服财富注册资本为1.08亿。</p>
+          </div>
+        </div>
+        <div class="item row row-center row-no-padding">
+          <div class="icon"><img src="images/item_04.png" alt=""></div>
+          <div class="col">
+            <h1 class="color-dark f14 margin-bottom10 bold">水滴风控 资产优质</h1>
+            <p class="color-gray">自主研发水滴风控，坏账率极低；技术系统自动匹配资产，保障真实优质有效。</p>
           </div>
         </div>
       </div>

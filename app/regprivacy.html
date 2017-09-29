@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" class="full-height">
+
+<head>
+    <meta charset="UTF-8">
+    <title>麦子金服财富</title>
+    <meta name="description" content="nono">
+    <meta name="viewport" content="initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <meta name="format-detection" content="telephone=no">
+    <!-- safari full screen -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta id="apple-mobile-web-app-title" name="apple-mobile-web-app-title" content="nono">
+    <!--build:css css/main.min.css-->
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <!--endbuild-->
+    <script type="text/javascript" src="https://m.nonobank.com/nonoutil/js/tongdun.js"></script>
+    <script type="text/javascript" src="https://m.nonobank.com/tingYun/tingyun-rum-nono-activity.js" async></script>
+</head>
+
+<body>
+    <div id='app'  style="padding-top:15px; font-size:12px; line-height:20px;">
+      <div v-cloak v-html="regContent"></div>
+    </div>
+    <loading :show='isLoading'></loading>
+    <toast-msg :msg='toastMsg' @hide='hide()'></toast-msg>
+    <!-- build:js js/vendor.js -->
+    <!-- bower:js -->
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+    <script src="/bower_components/js-md5/src/md5.js"></script>
+    <script src="/bower_components/es6-promise/es6-promise.auto.min.js"></script>
+    <script src="/bower_components/axios/dist/axios.js"></script>
+    <script src="/bower_components/es6-shim/es6-shim.js"></script>
+    <script src="/bower_components/es5-shim/es5-shim.js"></script>
+    <!-- endbower -->
+    <!--endbuild-->
+    <!--build:js js/privacy.min.js -->
+    <script src="js/qs.js"></script>
+    <script src="js/encryptSign.js"></script>
+    <script src="js/event.js"></script>
+    <script src="js/http.js"></script>
+    <script src="js/regprivacy.js"></script>
+    <!--endbuild-->
+</body>
+
+</html>

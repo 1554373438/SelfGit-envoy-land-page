@@ -258,7 +258,8 @@
         $http.post('/user/register',params).then(function(res) {
           if(res.succeed){
             setSession('invite-jwt',res.data.jwt);
-            location.href = 'regsuccess.html?balance='+ balance;
+            debugger;
+            // location.href = 'regsuccess.html?balance='+ balance;
           } else if(res.errorCode == '0100154'){
             vm.errorMsg = '*请输入正确的验证码';
           } else {
@@ -284,6 +285,10 @@
           return;
         }
         vm.doRegister();
+      },
+
+      goRegPrivacy:function(){
+        location.href = 'regprivacy.html';
       }
 
     }
